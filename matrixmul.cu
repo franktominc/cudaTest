@@ -36,11 +36,11 @@ int main()
 
     d_A.set(&h_A[0], SIZE);
     d_B.set(&h_B[0], SIZE);
-	cutStartTimer(kernelTime);
+	cudaStartTimer(kernelTime);
     matrixMultiplication(d_A.getData(), d_B.getData(), d_C.getData(), N);
     cudaDeviceSynchronize();
-	cutStopTimer(kernelTime);
-	cout << "Computation time for a " << N << " sized matrix is: " << cutGetTimerValue(kernelTime) << endl;	
+	cudaStopTimer(kernelTime);
+	cout << "Computation time for a " << N << " sized matrix is: " << cudaGetTimerValue(kernelTime) << endl;	
 	
     d_C.get(&h_C[0], SIZE);
     cudaDeviceSynchronize();
