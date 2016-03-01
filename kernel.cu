@@ -4,12 +4,12 @@
 
 using namespace std;
 
-__global__ void matrixMultiplicationKernel(float* A, float* B, float* C, int N) {
+__global__ void matrixMultiplicationKernel(double* A, double* B, double* C, int N) {
 
     int ROW = blockIdx.y*blockDim.y+threadIdx.y;
     int COL = blockIdx.x*blockDim.x+threadIdx.x;
 
-    float tmpSum = 0;
+    double tmpSum = 0;
 
     if (ROW < N && COL < N) {
         // each thread computes one element of the block sub-matrix
@@ -21,7 +21,7 @@ __global__ void matrixMultiplicationKernel(float* A, float* B, float* C, int N) 
 }
 
 
-void matrixMultiplication(float *A, float *B, float *C, int N){
+void matrixMultiplication(double *A, double *B, double *C, int N){
 
     // declare the number of blocks per grid and the number of threads per block
     // use 1 to 512 threads per block
