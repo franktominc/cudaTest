@@ -18,9 +18,9 @@ int main()
 	cudaEvent_t start, stop;
  	float elapsedTime;
     // Allocate memory on the host
-    vector<float> h_A(SIZE);
-    vector<float> h_B(SIZE);
-    vector<float> h_C(SIZE);
+    vector<double> h_A(SIZE);
+    vector<double> h_B(SIZE);
+    vector<double> h_C(SIZE);
 
     // Initialize matrices on the host
     for (int i=0; i<N; i++){
@@ -31,9 +31,9 @@ int main()
     }
 
     // Allocate memory on the device
-    dev_array<float> d_A(SIZE);
-    dev_array<float> d_B(SIZE);
-    dev_array<float> d_C(SIZE);
+    dev_array<double> d_A(SIZE);
+    dev_array<double> d_B(SIZE);
+    dev_array<double> d_C(SIZE);
 
     d_A.set(&h_A[0], SIZE);
     d_B.set(&h_B[0], SIZE);
