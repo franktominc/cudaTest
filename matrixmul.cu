@@ -36,37 +36,15 @@ int main()
 
     d_A.set(&h_A[0], SIZE);
     d_B.set(&h_B[0], SIZE);
-
+	cutStartTimer(kernelTime);
     matrixMultiplication(d_A.getData(), d_B.getData(), d_C.getData(), N);
     cudaDeviceSynchronize();
-
+	cutStopTimer(kernelTime);
+	cout << "Computation time for a " << N << " sized matrix is: " << cutGetTimerValue(kernelTime) << endl;	
+	
     d_C.get(&h_C[0], SIZE);
     cudaDeviceSynchronize();
 
-    float *cpu_C;
-    cpu_C=new float[SIZE];
-
-    // Now do the matrix multiplication on the CPU
-    float sum;
-    for (int row=0; row<N; row++){
-        for (int col=0; col<N; col++){
-            sum = 0.f;
-            for (int n=0; n<N; n++){
-                sum += h_A[row*N+n]*h_B[n*N+col];
-            }
-            cpu_C[row*N+col] = sum;
-        }
-    }
-
-    double err = 0;
-    // Check the result and make sure it is correct
-    for (int ROW=0; ROW < N; ROW++){
-        for (int COL=0; COL < N; COL++){
-            err += cpu_C[ROW * N + COL] - h_C[ROW * N + COL];
-        }
-    }
-
-    cout << "Error: " << err << endl;
 
     return 0;
 }
