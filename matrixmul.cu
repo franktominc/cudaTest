@@ -13,7 +13,7 @@ int main()
 {
     // Perform matrix multiplication C = A*B
     // where A, B and C are NxN matrices
-    int N = 15000;
+    int N = 3000;
     int SIZE = N*N;
 	cudaEvent_t start, stop;
  	float elapsedTime;
