@@ -13,7 +13,7 @@ int main()
 {
     // Perform matrix multiplication C = A*B
     // where A, B and C are NxN matrices
-    int N = 16;
+    int N = 10000;
     int SIZE = N*N;
 
     // Allocate memory on the host
