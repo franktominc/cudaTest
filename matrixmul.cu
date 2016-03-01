@@ -48,7 +48,7 @@ int main()
  	cudaEventSynchronize( stop );
  	cudaEventElapsedTime( &elapsedTime, start, stop );
 
-	printf( "Time taken: %3.1f ms\n", elapsedTime );
+	cout << "Time taken: "<< elapsedTime << "ms" << endl;
 
     d_C.get(&h_C[0], SIZE);
     cudaDeviceSynchronize();
