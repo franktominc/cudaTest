@@ -37,16 +37,16 @@ int main()
 
     d_A.set(&h_A[0], SIZE);
     d_B.set(&h_B[0], SIZE);
-	HANDLE_ERROR( cudaEventCreate( &start ) );
- 	HANDLE_ERROR( cudaEventCreate( &stop ) );
- 	HANDLE_ERROR( cudaEventRecord( start, 0 ) );
+	cudaEventCreate( &start );
+ 	cudaEventCreate( &stop );
+ 	cudaEventRecord( start, 0 );
 
     matrixMultiplication(d_A.getData(), d_B.getData(), d_C.getData(), N);
     cudaDeviceSynchronize();
 
-	HANDLE_ERROR( cudaEventRecord( stop, 0 ) );
- 	HANDLE_ERROR( cudaEventSynchronize( stop ) );
- 	HANDLE_ERROR( cudaEventElapsedTime( &elapsedTime, start, stop ) );
+	cudaEventRecord( stop, 0 );
+ 	cudaEventSynchronize( stop );
+ 	cudaEventElapsedTime( &elapsedTime, start, stop );
 
 	printf( "Time taken: %3.1f ms\n", elapsedTime );
 
