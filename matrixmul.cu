@@ -15,7 +15,8 @@ int main()
     // where A, B and C are NxN matrices
     int N = 2000;
     int SIZE = N*N;
-
+	cudaEvent_t start, stop;
+ 	float elapsedTime;
     // Allocate memory on the host
     vector<float> h_A(SIZE);
     vector<float> h_B(SIZE);
@@ -36,12 +37,19 @@ int main()
 
     d_A.set(&h_A[0], SIZE);
     d_B.set(&h_B[0], SIZE);
-	cudaStartTimer(kernelTime);
+	HANDLE_ERROR( cudaEventCreate( &start ) );
+ 	HANDLE_ERROR( cudaEventCreate( &stop ) );
+ 	HANDLE_ERROR( cudaEventRecord( start, 0 ) );
+
     matrixMultiplication(d_A.getData(), d_B.getData(), d_C.getData(), N);
     cudaDeviceSynchronize();
-	cudaStopTimer(kernelTime);
-	cout << "Computation time for a " << N << " sized matrix is: " << cudaGetTimerValue(kernelTime) << endl;	
-	
+
+	HANDLE_ERROR( cudaEventRecord( stop, 0 ) );
+ 	HANDLE_ERROR( cudaEventSynchronize( stop ) );
+ 	HANDLE_ERROR( cudaEventElapsedTime( &elapsedTime, start, stop ) );
+
+	printf( "Time taken: %3.1f ms\n", elapsedTime );
+
     d_C.get(&h_C[0], SIZE);
     cudaDeviceSynchronize();
 
